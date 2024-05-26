@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This file is part of the QtWidgets module of the Qt Toolkit.
 * Copyright (C) 2016 The Qt Company Ltd.
 * Commercial License Usage
@@ -63,12 +63,22 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     // 可编辑的模型，需要获取索引项，根据指定的索引设置数据
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole) override;
     // 在模型中插入行和删除行
-    bool insertRows(int row, int count, const QModelIndex &parent) override;
-    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     // 显示标头
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+    // 为模型提供支持拖放的功能
+    // 1. 设置支持的拖放操作
+    Qt::DropActions supportedDropActions() const override;
+    // 2. 设置在拖放操作中导出的条目的数据的编码类型
+    QStringList mimeTypes() const override;
+    // 3. 将拖放到数据放入QMimeData中
+    QMimeData *mimeData(const QModelIndexList &indexes) const override;
+    // 4. 将拖放操作的数据放入模型中
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
     // 获取当前列表
     const QList<Contact> &getContacts() const;

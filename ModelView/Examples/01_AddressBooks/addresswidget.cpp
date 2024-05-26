@@ -50,7 +50,6 @@ void AddressWidget::readFromFile()
         return;
     } else {
         foreach (auto contact, contacts) {
-            qDebug() << contact.name << contact.address;
             addEntry(contact.name, contact.address);
         }
     }
@@ -176,8 +175,14 @@ void AddressWidget::createTabs()
         tableView->horizontalHeader()->setStretchLastSection(true);  // 最后一个可见列占用所有剩余空间
         tableView->verticalHeader()->hide();  // 隐藏垂直标题栏
         tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  // 编辑策略
-        tableView->setSelectionMode(QAbstractItemView::SingleSelection);  // 单选
-        tableView->setSortingEnabled(true);
+        tableView->setSelectionMode(QAbstractItemView::ExtendedSelection);  // 单选
+        tableView->setSortingEnabled(false);
+
+        // 启用拖放操作
+        tableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        tableView->setDragEnabled(true);  // 设置拖放功能可用
+        tableView->setAcceptDrops(true);  // 启用拖放
+        tableView->setDropIndicatorShown(true);  // 显示要拖放的位置
 
         connect(tableView->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &AddressWidget::selectionChanged);
@@ -188,36 +193,5 @@ void AddressWidget::createTabs()
 
         addTab(tableView, label);
     }
-
-//    const auto groups = { "ABC", "DEF", "GHI", "JKL", "MNO", "PQR", "STU", "VW", "XYZ" };
-
-//    for (const QString &str : groups) {
-//        const auto regExp = QRegularExpression(QString("^[%1].*").arg(str),
-//                                               QRegularExpression::CaseInsensitiveOption);
-
-//        auto proxyModel = new QSortFilterProxyModel(this);
-//        proxyModel->setSourceModel(m_tableModel);
-//        proxyModel->setFilterRegularExpression(regExp);
-//        proxyModel->setFilterKeyColumn(0);
-
-//        QTableView *tableView = new QTableView;
-//        tableView->setModel(proxyModel);
-//        tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-//        tableView->horizontalHeader()->setStretchLastSection(true);
-//        tableView->verticalHeader()->hide();
-//        tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//        tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-//        tableView->setSortingEnabled(true);
-
-//        connect(tableView->selectionModel(), &QItemSelectionModel::selectionChanged,
-//                this, &AddressWidget::selectionChanged);
-
-//        connect(this, &QTabWidget::currentChanged, this, [this, tableView](int tabIndex) {
-//            if (widget(tabIndex) == tableView)
-//                emit selectionChanged(tableView->selectionModel()->selection());
-//        });
-
-//        addTab(tableView, str);
-//    }
 
 }
