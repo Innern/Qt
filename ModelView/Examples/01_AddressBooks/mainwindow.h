@@ -21,13 +21,15 @@ private slots:
     void openFile();
     void saveFile();
     void updateActions(QItemSelection selected);
+    void closeTabBar(int index);
 
 private:
     void createMenus();
+    void createPropetryMenu();
 private:
     QAction *editEntry;
     QAction *removeEntry;
-    QTabWidget *m_cenWidget;
+    QAction *tabBarAutoHideAct;
     AddressWidget *m_addressWidget;
 };
 #endif // MAINWINDOW_H
