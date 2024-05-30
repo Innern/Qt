@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1142</width>
+    <height>681</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1142</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menu_Open_File">
+     <property name="title">
+      <string>&amp;Open File</string>
+     </property>
+     <addaction name="action_Open_File"/>
+     <addaction name="actionOpen_Raw_File"/>
+     <addaction name="actionOpen_TIF"/>
+    </widget>
+    <addaction name="menu_Open_File"/>
+    <addaction name="action_Save_File"/>
+   </widget>
+   <widget class="QMenu" name="menu_Color_Space">
+    <property name="title">
+     <string>&amp;Color Space</string>
+    </property>
+    <addaction name="actionRGB2HSI"/>
+    <addaction name="actionRGB2Gray"/>
+   </widget>
+   <widget class="QMenu" name="menu_Math">
+    <property name="title">
+     <string>&amp;Math</string>
+    </property>
+    <addaction name="action_Sum"/>
+   </widget>
+   <widget class="QMenu" name="menu_Gray_Scale_Transformation">
+    <property name="title">
+     <string>&amp;Gray-Scale Transformation</string>
+    </property>
+    <widget class="QMenu" name="menu_Histogram">
+     <property name="title">
+      <string>&amp;Histogram</string>
+     </property>
+     <addaction name="action_Normalize"/>
+     <addaction name="action_Equalization"/>
+     <addaction name="action_Matching"/>
+     <addaction name="action_Local"/>
+     <addaction name="action_Statistics"/>
+    </widget>
+    <addaction name="action_Reverse"/>
+    <addaction name="action_Log"/>
+    <addaction name="action_Power"/>
+    <addaction name="action_Bit_layering"/>
+    <addaction name="menu_Histogram"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="action_Concentric_Circular_reflector"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Color_Space"/>
+   <addaction name="menu_Math"/>
+   <addaction name="menu_Gray_Scale_Transformation"/>
+   <addaction name="menu_Tools"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_Open_File"/>
+   <addaction name="actionOpen_TIF"/>
+   <addaction name="actionOpen_Raw_File"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget_ImageInfo">
+   <property name="minimumSize">
+    <size>
+     <width>154</width>
+     <height>205</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox_RawInfo">
+       <property name="title">
+        <string>RawInfo</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Width:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="spinBox_RawWidth">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+          <property name="value">
+           <number>4096</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Height:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spinBox_RawHeight">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+          <property name="value">
+           <number>3072</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Bayer:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="comboBox_RawBayer">
+          <item>
+           <property name="text">
+            <string>RGGB</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GRBG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GBRG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BGGR</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>RawBits:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="comboBox_RawBits">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>8bits</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>10bits</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>12bits</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>16bits</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QPushButton" name="pushButton_OK">
+          <property name="text">
+           <string>OK</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>427</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_SpatialFilter">
+   <property name="minimumSize">
+    <size>
+     <width>174</width>
+     <height>321</height>
+    </size>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Spatial Filter:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_SpatialFilterTypes">
+       <item>
+        <property name="text">
+         <string>Mean Filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Box Filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Median Filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gaussian Filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bilateral Filter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Laplace</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8Laplace</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>HighLift</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Sobel</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_SpatialFilterNormalize">
+       <property name="text">
+        <string>Normalize</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_FilterParams">
+       <property name="title">
+        <string>FilterParams</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>BorderType:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>KSize:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="spinBox_FilterKSize">
+          <property name="keyboardTracking">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+          <property name="singleStep">
+           <number>2</number>
+          </property>
+          <property name="value">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_param1">
+          <property name="text">
+           <string>param1:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_param2">
+          <property name="text">
+           <string>param2:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QComboBox" name="comboBox_FilterBorderType"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_BorderValue">
+          <property name="text">
+           <string>BorderVal:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_FilterDelta">
+          <property name="keyboardTracking">
+           <bool>false</bool>
+          </property>
+          <property name="maximum">
+           <double>255.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_FilterScale">
+          <property name="keyboardTracking">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>255.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="spinBox_BorderValue">
+          <property name="keyboardTracking">
+           <bool>false</bool>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_SpatialFilterOk">
+       <property name="text">
+        <string>OK</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>27</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_Open_File">
+   <property name="text">
+    <string>&amp;Open Picture</string>
+   </property>
+  </action>
+  <action name="actionLSC">
+   <property name="text">
+    <string>LSC</string>
+   </property>
+  </action>
+  <action name="actionOpen_Raw_File">
+   <property name="text">
+    <string>Open Raw</string>
+   </property>
+  </action>
+  <action name="actionRGB2HSI">
+   <property name="text">
+    <string>RGB-&gt;HSI</string>
+   </property>
+  </action>
+  <action name="actionRGB2Gray">
+   <property name="text">
+    <string>RGB-&gt;&amp;Gray</string>
+   </property>
+  </action>
+  <action name="action_Sum">
+   <property name="text">
+    <string>&amp;Sum</string>
+   </property>
+  </action>
+  <action name="action_Reverse">
+   <property name="text">
+    <string>&amp;Reverse</string>
+   </property>
+   <property name="toolTip">
+    <string>增强图像暗色区域中的白色或灰色细节</string>
+   </property>
+  </action>
+  <action name="action_Log">
+   <property name="text">
+    <string>&amp;Log</string>
+   </property>
+  </action>
+  <action name="action_Power">
+   <property name="icon">
+    <iconset theme="γ&lt;1减小对比度；γ&gt;1，压缩灰度级">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Power</string>
+   </property>
+  </action>
+  <action name="action_Bit_layering">
+   <property name="text">
+    <string>&amp;Bit Layering</string>
+   </property>
+  </action>
+  <action name="action_Normalize">
+   <property name="text">
+    <string>&amp;Normalize</string>
+   </property>
+  </action>
+  <action name="action_Save_File">
+   <property name="text">
+    <string>&amp;Save File</string>
+   </property>
+  </action>
+  <action name="action_Equalization">
+   <property name="text">
+    <string>&amp;Equalization</string>
+   </property>
+  </action>
+  <action name="action_Matching">
+   <property name="text">
+    <string>&amp;Matching</string>
+   </property>
+  </action>
+  <action name="action_Local">
+   <property name="text">
+    <string>&amp;Local</string>
+   </property>
+  </action>
+  <action name="actionOpen_TIF">
+   <property name="text">
+    <string>Open &amp;TIF</string>
+   </property>
+  </action>
+  <action name="action_Statistics">
+   <property name="text">
+    <string>&amp;Statistics</string>
+   </property>
+  </action>
+  <action name="action_Concentric_Circular_reflector">
+   <property name="text">
+    <string>&amp;Concentric Circular reflector</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,10 @@
+QLineEdit{
+    background-color: rgb(250, 250, 250);
+/*    border-radius: 5;  /*圆角矩形角度*/*/
+}
+
+/*按钮*/
+QPushButton{
+    /*背景颜色*/
+/*    background-color: rgb(85, 85, 127);*/
+}

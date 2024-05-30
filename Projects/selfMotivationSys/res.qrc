@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/res">
+        <file alias="windowPng">res/1195450.png</file>
+        <file alias="windowIcon">res/icon1.ico</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/FAIL.png</file>
+        <file>images/OK.png</file>
+        <file>images/clearlog.png</file>
+        <file>images/closeCamera.png</file>
+        <file>images/closeprogma.png</file>
+        <file>images/Config.png</file>
+        <file>images/copy.png</file>
+        <file>images/exit.png</file>
+        <file>images/kaishi.png</file>
+        <file>images/light.png</file>
+        <file>images/loaddccf.png</file>
+        <file>images/openCamera.png</file>
+        <file>images/runprogma.png</file>
+        <file>images/saveui.png</file>
+        <file>images/fusion.png</file>
+        <file>images/windows.png</file>
+        <file>images/windowsvista.png</file>
+        <file>images/MES_OFF.png</file>
+        <file>images/MES_ON.png</file>
+        <file>images/waitingForConnect.png</file>
+        <file>images/binding.png</file>
+        <file>images/clear_binding.png</file>
+        <file>images/User.png</file>
+    </qresource>
+</RCC>

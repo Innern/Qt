@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/iicons">
+        <file alias="wanring">res/warning.ico</file>
+        <file alias="anti_virus">res/watcher.png</file>
+        <file alias="watcherico">res/watcher.ico</file>
+    </qresource>
+</RCC>
