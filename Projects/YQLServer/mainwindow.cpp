@@ -12,11 +12,19 @@
 #include <QThread>
 #include <QDebug>
 #include <QCloseEvent>
-#include <QDesktopWidget>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+// #include <QDesktopWidget>
+#else
+#include <QGuiApplication>
+#include <QTextCodec>
+#endif
+
 #include <QFileDialog>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QMessageBox>
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -186,7 +194,11 @@ void MainWindow::readUISettings()
     if(geometry.isEmpty())
     {
         // 如果没有保存几何信息，设置默认的程序大小及位置
-        const QRect avaliableRect = QApplication::desktop()->availableGeometry();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    const QRect avaliableRect = QApplication::desktop()->availableGeometry();  // 屏幕几何大小
+#else
+    const QRect avaliableRect = QGuiApplication::primaryScreen()->geometry();  // 屏幕几何大小
+#endif
         resize(avaliableRect.width()/3,avaliableRect.height()/3);
         move((avaliableRect.width() - width())/2, (avaliableRect.height() - height())/2);
     }
@@ -440,7 +452,7 @@ void MainWindow::setMESStatus(const QString &dccfFile)
 {
     // 从dccf中获取mes状态
     QSettings settings(QFileInfo(dccfFile).canonicalFilePath(),QSettings::IniFormat);
-    settings.setIniCodec(QTextCodec::codecForName("UTF-8"));
+    // settings.setIniCodec(QTextCodec::codecForName("UTF-8"));
     int mesState = settings.value("DataSavingTab/SaveToSQL_En",0).toInt();
     if(mesState == 0)  // mes关闭状态
     {
@@ -1039,7 +1051,11 @@ void MainWindow::on_actionOpen_Program_triggered()
     // 获取界面设置
     QString exePath;
     QStringList arguments;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     const QRect avaliableRect = QApplication::desktop()->availableGeometry();  // 屏幕几何大小
+#else
+    const QRect avaliableRect = QGuiApplication::primaryScreen()->geometry();  // 屏幕几何大小
+#endif
 
     QString strlog;
 

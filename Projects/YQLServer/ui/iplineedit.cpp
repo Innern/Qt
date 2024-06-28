@@ -1,6 +1,10 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "iplineedit.h"
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QRegExpValidator>  // 正则表达式验证器
+#else
+#include <QRegularExpressionValidator>
+#endif
 #include <QPainter>  // 绘图
 #include <QHBoxLayout>  // 水平布局
 #include <QKeyEvent>  // 键盘事件
@@ -11,7 +15,12 @@ IPLineEdit::IPLineEdit(QWidget *parent):
     QLineEdit(parent)
 {
     mainBackground = this->styleSheet();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExp rx("(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})");
+#else
+    QRegularExpression rx("(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})");
+#endif
+
     QHBoxLayout *phBoxLayout = new QHBoxLayout(this);
     phBoxLayout->setSpacing(10);  // 设置间距
     phBoxLayout->setContentsMargins(0,0,0,0);  // 设置内容间距
@@ -25,7 +34,11 @@ IPLineEdit::IPLineEdit(QWidget *parent):
         m_lineEdit[i]->setMaxLength(3);  // 设置文本允许的最大长度
         m_lineEdit[i]->setAlignment(Qt::AlignCenter);  // 设置文本对齐方式
         m_lineEdit[i]->installEventFilter(this);  // 安装事件过滤器
-        m_lineEdit[i]->setValidator(new QRegExpValidator(rx,this));  // 设置验证其
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        m_lineEdit[i]->setValidator(new QRegExpValidator(rx,this));  // 设置验证器
+#else
+        m_lineEdit[i]->setValidator(new QRegularExpressionValidator(rx,this));  // 设置验证器
+#endif
         m_lineEdit[i]->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);  // 设置尺寸
         phBoxLayout->addWidget(m_lineEdit[i]);
     }
@@ -73,7 +86,7 @@ QString IPLineEdit::text() const
 
 void IPLineEdit::setStyleSheet(const QString &styleSheet)
 {
-//    this->setStyleSheet(mainBackground);
+    //    this->setStyleSheet(mainBackground);
 }
 
 void IPLineEdit::paintEvent(QPaintEvent *event)
@@ -245,8 +258,15 @@ int IPLineEdit::getIndex(QLineEdit *pEdit)
 
 bool IPLineEdit::isTextValid(const QString &strIP)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExp rx2("\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
     if(!rx2.exactMatch(strIP))
         return false;
+#else
+    QRegularExpression rx2("\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
+    if(!rx2.match(strIP).hasMatch())
+        return false;
+#endif
+
     return true;
 }

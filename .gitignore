@@ -62,7 +62,7 @@ Thumbs.db
 # MinGW generated files
 *.Debug
 *.Release
-
+*build/
 *-Debug
 *-Release
 

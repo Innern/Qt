@@ -89,7 +89,7 @@ void CutLightDlg::showProcessResult()
     QTextCodec *codec = QTextCodec::codecForLocale();
 
     m_errorString = codec->toUnicode(process->readAll());
-    qDebug() << "showResult:" << endl << m_errorString;
+    qDebug() << "showResult:\n" << m_errorString;
     emit signal_showCutlightResult(m_errorString,NormalLevel);
 }
 

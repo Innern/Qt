@@ -3,7 +3,11 @@
 #include "ui_snbindingdialog.h"
 
 #include <QComboBox>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QRegExp>
+#else
+#include <QRegularExpression>
+#endif
 #include <QTextCodec>
 #include <QDebug>
 #include <QSettings>
@@ -39,12 +43,21 @@ void SNBindingDialog::showProcessResult()
     QTextCodec *codec = QTextCodec::codecForLocale();
     const QString strResult = codec->toUnicode(process->readAll());
     m_snList.clear();
-    QRegExp rx(":([0-9a-zA-Z-]*)");
     int pos=0;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    QRegExp rx(":([0-9a-zA-Z-]*)");
     while ((pos = rx.indexIn(strResult,pos)) != -1) {
         m_snList << rx.cap(1);
         pos += rx.matchedLength();
     }
+#else
+    QRegularExpression rx(":([0-9a-zA-Z-]*)");
+    // while ((pos = rx.indexIn(strResult,pos)) != -1) {
+    //     m_snList << rx.cap(1);
+    //     pos += rx.matchedLength();
+    // }
+#endif
+
     qDebug() << m_snList;
     emit signal_showTableWidgetItem(m_snList);
 }

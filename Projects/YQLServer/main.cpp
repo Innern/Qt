@@ -16,6 +16,7 @@ void outputMessage(QtMsgType type,const QMessageLogContext &context,const QStrin
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
     // 安装消息处理函数
     qInstallMessageHandler(outputMessage);
 
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    QApplication a(argc, argv);
+
     qDebug() << QObject::tr("====================================程序启动========================================");
     LoginDlg dlg;
 
