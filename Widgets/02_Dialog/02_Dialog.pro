@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ClassWizard/classwizard.cpp \
+    LicenseWizard/licensewizard.cpp \
     main.cpp \
     mainwindow.cpp \
     welcomedialog.cpp
 
 HEADERS += \
     ClassWizard/classwizard.h \
+    LicenseWizard/licensewizard.h \
     mainwindow.h \
     welcomedialog.h
 

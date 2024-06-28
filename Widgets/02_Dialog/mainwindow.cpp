@@ -1,6 +1,7 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "mainwindow.h"
 #include "ClassWizard/classwizard.h"
+#include "LicenseWizard/licensewizard.h"
 #include "ui_mainwindow.h"
 #include "welcomedialog.h"
 
@@ -36,8 +37,10 @@ QFileDialog::Options MainWindow::fileOptions()
         options |= QFileDialog::DontResolveSymlinks;
     if(ui->checkBox_fileOption_donotConfirmOverwrite->isChecked())
         options |= QFileDialog::DontConfirmOverwrite;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     if(ui->checkBox_fileOption_donotUseSheet->isChecked())
         options |= QFileDialog::DontUseSheet;
+#endif
     if(ui->checkBox_fileOption_donotUseNativeDialog->isChecked())
         options |= QFileDialog::DontUseNativeDialog;
     if(ui->checkBox_fileOption_readOnly->isChecked())
@@ -327,6 +330,14 @@ void MainWindow::updateWizardStyle()
 void MainWindow::on_pushButton_classWizard_clicked()
 {
     ClassWizard wizard(this);
+    wizard.setWizardStyle(wizardStyle);
+
+    wizard.exec();
+}
+
+void MainWindow::on_pushButton_licenseWizard_clicked()
+{
+    LicenseWizard wizard(this);
     wizard.setWizardStyle(wizardStyle);
 
     wizard.exec();

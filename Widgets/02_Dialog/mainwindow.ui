@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
-    <height>407</height>
+    <width>739</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,8 +60,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -137,8 +137,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -326,8 +326,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -413,8 +413,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -570,8 +570,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -633,8 +633,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -657,11 +657,24 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_classWizard">
-          <property name="whatsThis">
+          <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The Class Wizard shows how to implement linear wizards using QWizard.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;类向导展示了如何使用QWizard实现线性向导。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string>Class Wizard</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_licenseWizard">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The License Wizard shows how to implement complex wizards in Qt.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;License Wizard显示了如何在Qt中实现复杂的向导。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>License Wizard</string>
           </property>
          </widget>
         </item>
@@ -673,7 +686,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>30</height>
+            <height>11</height>
            </size>
           </property>
          </spacer>
@@ -694,7 +707,7 @@
            <item>
             <widget class="QRadioButton" name="radioButton_wizard_modernStyle">
              <property name="text">
-              <string>Modernn Style</string>
+              <string>Modern Style</string>
              </property>
             </widget>
            </item>
@@ -722,8 +735,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>472</width>
-         <height>209</height>
+         <width>636</width>
+         <height>369</height>
         </rect>
        </property>
        <attribute name="label">
@@ -768,8 +781,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>572</width>
-     <height>17</height>
+     <width>739</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

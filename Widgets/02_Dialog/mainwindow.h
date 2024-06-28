@@ -68,6 +68,8 @@ private slots:
     void updateWizardStyle();
     void on_pushButton_classWizard_clicked();
 
+    void on_pushButton_licenseWizard_clicked();
+
 private:
     QFileDialog::Options fileOptions();
     QWizardPage *createPage(const QString &title);

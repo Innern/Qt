@@ -7,5 +7,7 @@
         <file alias="logo3.png">images/logo3.png</file>
         <file alias="watermark1.png">images/watermark1.png</file>
         <file alias="watermark2.png">images/watermark2.png</file>
+        <file alias="logo.png">images/logo.png</file>
+        <file alias="watermark.png">images/watermark.png</file>
     </qresource>
 </RCC>
