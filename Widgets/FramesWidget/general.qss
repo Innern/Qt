@@ -1,0 +1,27 @@
+# 自定义行编辑器组件样式
+# 自定义行编辑器组件1-仿浏览器导航栏：在行编辑器右边添加按钮，类似浏览器中的导航栏
+# 行编辑器样式
+QLineEdit{
+        border: 1px solid #EEE;
+        # 边界圆角半径
+        border-radius: 4px;
+        # 与右侧的距离
+        padding-right:14px;
+}
+# 当获取到焦点时
+QLineEdit:focue{
+        border-color: #bbbec4;
+}
+# 行编辑器中的标准按钮的样式
+QLineEdit QPushButton{
+        width: 16px;
+        height: 16px;
+        qproperty-flat: true;
+        margin-right: 40px;
+        # 没有边框
+        border: none;
+        border-width: 0;
+        # border-image: url(:/imgs/refresh-32.png) 0 0 0 0 stretch stretch;
+        border-image: url(:/imgs/refresh-32.png);
+}
+

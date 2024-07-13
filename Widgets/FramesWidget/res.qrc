@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imgs/qtlogo.png</file>
+        <file>imgs/flipable.gif</file>
+        <file>resources/countries.txt</file>
+        <file>resources/wordlist.txt</file>
+        <file>imgs/refresh-32.png</file>
+    </qresource>
+</RCC>

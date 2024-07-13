@@ -13,7 +13,7 @@
 #include <QDebug>
 #include <QCloseEvent>
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-// #include <QDesktopWidget>
+#include <QDesktopWidget>
 #else
 #include <QGuiApplication>
 #include <QTextCodec>
