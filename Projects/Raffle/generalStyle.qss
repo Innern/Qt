@@ -1,0 +1,42 @@
+
+QLabel{
+    background-color: transparent;
+}
+
+#label_company{
+    color: #fff143;
+    font: 48pt "Microsoft YaHei UI";
+    font-style: italic;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+#label_awardType{
+    color: #fed71a;
+    font: 26pt "Microsoft YaHei UI";
+    font-style: italic;
+    font-weight: bold;
+    background-color: #ef7a82;
+}
+
+#label_prize{
+    color: #fed71a;
+    font: 24pt "Microsoft YaHei UI";
+    font-style: italic;
+    font-weight: bold;
+    background-color: #ef7a82;
+}
+#widget_center{
+        border-image: url(:/images/bg.png);
+}
+
+#InformationsDialog {
+    background-color: #f9906f;
+}
+QTableView{
+    background-color: #f9906f;
+}
+
+QComboBox{
+    background-color: #f9906f;
+}

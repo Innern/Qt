@@ -1,0 +1,10 @@
+
+QLabel{
+    background-color: ##f47983;
+}
+
+/*
+#widget_center{
+        border-image: url(:/images/bg.png);
+}
+*/

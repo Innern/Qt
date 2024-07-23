@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/bg.png</file>
+        <file>images/bg1.png</file>
+        <file>images/bg2.png</file>
+        <file>images/setup.png</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>generalStyle.qss</file>
+    </qresource>
+</RCC>
