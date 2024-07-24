@@ -11,6 +11,7 @@ InformationsDialog::InformationsDialog(QWidget *parent) :
   , m_model(new QSqlRelationalTableModel)
 {
     ui->setupUi(this);
+
     // 设置窗口标题
     setWindowTitle(tr("Informations"));
 
@@ -18,7 +19,11 @@ InformationsDialog::InformationsDialog(QWidget *parent) :
     m_tableNames.clear();
     m_tableNames = QStringList() << tr("staff")
                                  << tr("prizes")
-                                 << tr("luckyDog");
+                                 << tr("luckyDog")
+                                 << tr("configurations");
+
+    getConfigurationFromDB();
+
     ui->comboBox_tableName->addItems(m_tableNames);
     ui->comboBox_tableName->setCurrentText(m_tableNames.at(m_tableNames.size()-1));
 #if QT_VERSION < QT_VERSION_CHECK(5,15,0)
@@ -35,7 +40,6 @@ InformationsDialog::InformationsDialog(QWidget *parent) :
 
     getStaffsFromDB();
     getPrizesFromDB();
-
 }
 
 InformationsDialog::~InformationsDialog()
@@ -162,7 +166,7 @@ void InformationsDialog::getStaffsFromDB()
 {
     m_staffs.clear();
     QSqlQuery query;
-    query.exec(tr("select * from staff;"));
+    query.exec(QString("select * from staff;"));
     Staff staff;
     while (query.next()) {
         staff.id = query.value("id").toString();
@@ -179,7 +183,7 @@ void InformationsDialog::getPrizesFromDB()
 {
     m_prizes.clear();
     QSqlQuery query;
-    query.exec(tr("select * from prizes;"));
+    query.exec(QString("select * from prizes;"));
     Prize prize;
     QString tmpval;
     while (query.next()) {
@@ -194,6 +198,21 @@ void InformationsDialog::getPrizesFromDB()
         prize.level = query.value("level").toString();
         m_prizes.append(prize);
     }
+    query.finish();
+}
+
+void InformationsDialog::getConfigurationFromDB()
+{
+    m_staffs.clear();
+    QSqlQuery query;
+    query.exec(QString("select * from %1;").arg(m_tableNames.at(Table_Configuration)));
+    query.next();
+    m_companyName = query.value("company_name").toString();
+    m_drawTime = query.value("draw_time").toInt();
+    m_backgroundMusic = query.value("background_music").toString();
+    m_rollMusic = query.value("roll_music").toString();
+    m_luckyMusic = query.value("lucky_music").toString();
+
     query.finish();
 }
 
@@ -268,7 +287,7 @@ void InformationsDialog::on_pushButton_delete_clicked()
     const int curRow = ui->tableView->currentIndex().row();
     //    m_model->setTable(ui->comboBox_tableName->currentText());
     m_model->removeRow(curRow);
-
+#if 0
     int ok = QMessageBox::question(this, tr("Delete"), tr("Are you sure to delete this row information?"),
                                    QMessageBox::Yes, QMessageBox::Cancel);
     if(ok == QMessageBox::Yes){
@@ -276,5 +295,8 @@ void InformationsDialog::on_pushButton_delete_clicked()
     } else {
         on_pushButton_rollback_clicked();
     }
+#else
+    on_pushButton_commit_clicked();
+#endif
 }
 

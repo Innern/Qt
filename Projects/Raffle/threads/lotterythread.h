@@ -13,6 +13,7 @@ public:
 
     void processLottery(int count);
     void setLuckyCount(int cnt);
+    void setIntervalTime(int msec);
     void setPeopleList(const StaffList &staffList);
 signals:
     void sendLuckyID(int id);
@@ -29,6 +30,7 @@ private:
     QMutex m_mutex;
     QList<int> m_luckyIds;
     int *m_pOwnerStatus;
+    int m_intervalTime;
 };
 
 #endif // LOTTERYTHREAD_H

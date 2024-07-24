@@ -5,7 +5,7 @@ QLabel{
 
 #label_company{
     color: #fff143;
-    font: 48pt "Microsoft YaHei UI";
+    font: 54pt "Microsoft YaHei UI";
     font-style: italic;
     font-weight: bold;
     background-color: transparent;
@@ -26,8 +26,12 @@ QLabel{
     font-weight: bold;
     background-color: #ef7a82;
 }
+
+#widget_special{
+    border-image: url(:/images/2.png);
+}
 #widget_center{
-        border-image: url(:/images/bg.png);
+    border-image: url(:/images/bg.png);
 }
 
 #InformationsDialog {

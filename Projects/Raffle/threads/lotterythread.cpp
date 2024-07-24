@@ -34,6 +34,11 @@ void LotteryThread::setLuckyCount(int cnt)
     m_luckyCount = cnt;
 }
 
+void LotteryThread::setIntervalTime(int msec)
+{
+    m_intervalTime = msec;
+}
+
 void LotteryThread::setPeopleList(const StaffList &staffList)
 {
     if(!m_pOwnerStatus){
@@ -80,7 +85,7 @@ void LotteryThread::run()
         }
         emit sendLuckyID(randomID);
         emit sendLuckyIds(m_luckyIds);
-        msleep(500);
+        msleep(m_intervalTime);
     }
 
     emit sendFinalLuckyIds(m_luckyIds);

@@ -9,6 +9,8 @@ namespace Ui { class MainWindow; }
 class QLabel;
 class QHBoxLayout;
 class QVBoxLayout;
+class QMediaPlaylist;
+class QMediaPlayer;
 QT_END_NAMESPACE
 class InformationsDialog;
 class LotteryThread;
@@ -37,6 +39,7 @@ private slots:
 private:
     void selectCurrentPrize(bool up);
     static QString giftsPath();
+    static QString mediaPath();
 
     QLabel *createLabel();
     void hideAllLuckyLabels();
@@ -44,6 +47,8 @@ private:
     void loadStyleSheet();
 
     void changeLuckyStatus();
+
+    void initPlayer();
 
 private:
     Ui::MainWindow *ui;
@@ -63,6 +68,10 @@ private:
     int m_luckyPeopleCnt;
 
     QTimer *m_timer;
+
+    QMediaPlaylist *m_playlist;
+    QMediaPlayer *m_player;
+
 
 };
 #endif // MAINWINDOW_H

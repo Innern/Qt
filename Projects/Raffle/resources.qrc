@@ -4,6 +4,7 @@
         <file>images/bg1.png</file>
         <file>images/bg2.png</file>
         <file>images/setup.png</file>
+        <file>images/2.png</file>
     </qresource>
     <qresource prefix="/qss">
         <file>generalStyle.qss</file>

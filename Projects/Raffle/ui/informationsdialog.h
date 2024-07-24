@@ -39,6 +39,11 @@ public:
     StaffList getStaffs();
     PrizeList getPrizes();
     int getOwnPrizeCnt();
+    QString getCompanyName() const { return m_companyName; }
+    int getDrawTime() const { return m_drawTime; }
+    QString getBackgroundMusic() const { return m_backgroundMusic; }
+    QString getRollMusic() { return m_rollMusic; }
+    QString getLuckyMusic() { return m_luckyMusic; }
 
 
 signals:
@@ -71,17 +76,23 @@ private:
     void setTableHeaderData(QSqlRelationalTableModel *model, const QString &tablename);
     void getStaffsFromDB();
     void getPrizesFromDB();
+    void getConfigurationFromDB();
     int getLuckyDogsCountFromDB();
 
 
 private:
-    enum{Table_Staff, Table_Prize, Table_LuckyDog};
+    enum{Table_Staff, Table_Prize, Table_LuckyDog, Table_Configuration};
     Ui::InformationsDialog *ui;
     QSqlRelationalTableModel *m_model;
     QStringList m_tableNames;
     StaffList m_staffs;
     PrizeList m_prizes;
 
+    QString m_companyName;
+    int m_drawTime;
+    QString m_backgroundMusic;
+    QString m_rollMusic;
+    QString m_luckyMusic;
 
 };
 

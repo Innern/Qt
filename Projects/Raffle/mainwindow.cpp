@@ -5,11 +5,12 @@
 #include "threads/lotterythread.h"
 
 #include <QtWidgets>
+#include <QtMultimedia>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , m_pInfoDlg(Q_NULLPTR)
+    , m_pInfoDlg(new InformationsDialog(this))
     , m_thread(Q_NULLPTR)
     , m_pressCnt(-1)
     , m_showPrizeInfo(false)
@@ -22,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_showInfos->setDefault(false);
     //    ui->pushButton_start->setDefault(false);
     ui->pushButton_start->hide();
+
+    ui->label_awardType->hide();
+    ui->label_prize->hide();
+
     qDeleteAll(m_labelList);
 
     // layoutDrawWidget = new QHBoxLayout(ui->widget_drawLuckys);
@@ -29,10 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     layoutDrawWidget->setContentsMargins(0,10,0,10);
     layoutDrawWidget->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-    m_pInfoDlg = new InformationsDialog(this);
     connect(m_pInfoDlg, &InformationsDialog::infoChanged, this, &MainWindow::getChangeInfo);
     connect(this, &MainWindow::staffStateChanged, m_pInfoDlg, &InformationsDialog::changeStaffState);
-
 
     m_thread = new LotteryThread;
     connect(m_thread, &LotteryThread::sendLuckyIds, this, &MainWindow::getLuckyStaffs);
@@ -41,6 +44,13 @@ MainWindow::MainWindow(QWidget *parent)
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &MainWindow::updateTimeOut);
     m_timer->start(1000);
+
+    initPlayer();
+
+    m_player->play();
+
+    ui->label_company->setText(m_pInfoDlg->getCompanyName());
+
 
     getChangeInfo();
     changeLuckyStatus();
@@ -100,6 +110,28 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         on_pushButton_start_clicked();
     }
         return;
+    case Qt::Key_S:
+    {
+        if(m_player->state() == QMediaPlayer::PlayingState){
+            m_player->pause();
+        } else {
+            m_player->play();
+        }
+        return;
+    }
+    case Qt::Key_H:
+    {
+        if(ui->label_awardType->isHidden()){
+            ui->label_awardType->show();
+            ui->label_prize->show();
+            ui->label_prizeImage->show();
+        } else {
+            ui->label_awardType->hide();
+            ui->label_prize->hide();
+            ui->label_prizeImage->hide();
+        }
+        return;
+    }
     default:
         return QMainWindow::keyPressEvent(event);
     }
@@ -137,7 +169,7 @@ void MainWindow::on_pushButton_start_clicked()
     if(m_start){
         getChangeInfo();
         Prize prize = m_prizes.at(m_pressCnt);
-//         qDebug() << tr("The prize %1 has %2 lucky people.").arg(prize.name).arg(prize.num);
+        //         qDebug() << tr("The prize %1 has %2 lucky people.").arg(prize.name).arg(prize.num);
 
         int onceDraw = prize.onceDraw;  // 依次抽取的人数
         int &remaining = prize.onceDraw;
@@ -146,12 +178,12 @@ void MainWindow::on_pushButton_start_clicked()
             onceDraw = prize.remaining;
         }
         if(onceDraw <= 0){
-           if(QMessageBox::Yes == QMessageBox::warning(this, tr("Raffle"), tr("Current prize remaining 0.\nDo you want to draw free?"),
-                                                       QMessageBox::Yes | QMessageBox::Cancel)){
-               onceDraw = QInputDialog::getInt(this, tr("Raffle"), tr("Please input lucky count(0~10):"),5, 0, 10);
-           } else{
-               return;
-           }
+            if(QMessageBox::Yes == QMessageBox::warning(this, tr("Raffle"), tr("Current prize remaining 0.\nDo you want to draw free?"),
+                                                        QMessageBox::Yes | QMessageBox::Cancel)){
+                onceDraw = QInputDialog::getInt(this, tr("Raffle"), tr("Please input lucky count(0~10):"),5, 0, 10);
+            } else{
+                return;
+            }
         }
         // qDebug() << tr("remaining prize: ") << prize.remaining;
         // 创建显示结果的标签
@@ -172,17 +204,27 @@ void MainWindow::on_pushButton_start_clicked()
         // qDebug() << tr("%1 remaining %2").arg(prize.name).arg(prize.remaining);
         m_thread->setLuckyCount(onceDraw);
         m_thread->setPeopleList(m_staffs);
+        m_thread->setIntervalTime(m_pInfoDlg->getDrawTime());
         m_thread->processLottery(m_staffs.size());
+        m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+        m_playlist->setCurrentIndex(1);
+        //        m_player->play();
     } else {
         if(m_thread && m_thread->isRunning()){
             m_thread->stopProcess();
+            m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+            m_playlist->setCurrentIndex(2);
+            QThread::sleep(1);
         }
     }
 }
 
 void MainWindow::on_pushButton_showInfos_clicked()
 {
+    hideAllLuckyLabels();
+
     m_pInfoDlg->exec();
+
 }
 
 void MainWindow::getChangeInfo()
@@ -199,6 +241,8 @@ void MainWindow::processFinalLucky(const QList<int> &ids)
 
     changeLuckyStatus();
 
+    m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+    m_playlist->setCurrentIndex(3);
 }
 
 void MainWindow::updateTimeOut()
@@ -209,6 +253,10 @@ void MainWindow::updateTimeOut()
 void MainWindow::selectCurrentPrize(bool up)
 {
     hideAllLuckyLabels();
+
+    ui->label_awardType->show();
+    ui->label_prize->show();
+
     if(m_prizes.size() == 0){
         QMessageBox::warning(this, tr("Raffle"), tr("Please set prizes first!"));
         return;
@@ -227,7 +275,8 @@ void MainWindow::selectCurrentPrize(bool up)
                                                                       m_pressCnt;
 
     Prize prize = m_prizes.at(m_pressCnt);
-    ui->label_prize->setText(prize.name);
+    //    ui->label_prize->setText(prize.name);
+    ui->label_prize->setText(QString("%1 %2/%3").arg(prize.name).arg(prize.remaining).arg(prize.num));
     QString pixmapPath = giftsPath() + QString("%1.png").arg(m_pressCnt+1);
     // qDebug() << pixmapPath;
     pixmapPath = QDir(pixmapPath).canonicalPath();
@@ -244,6 +293,11 @@ void MainWindow::selectCurrentPrize(bool up)
 QString MainWindow::giftsPath()
 {
     return QApplication::applicationDirPath() + QString("/gift_images/");
+}
+
+QString MainWindow::mediaPath()
+{
+    return QApplication::applicationDirPath() + QString("/audio/");
 }
 
 QLabel *MainWindow::createLabel()
@@ -263,6 +317,7 @@ QLabel *MainWindow::createLabel()
 void MainWindow::hideAllLuckyLabels()
 {
     foreach (QLabel *label, m_labelList) {
+        label->clear();
         label->hide();
     }
 }
@@ -272,7 +327,7 @@ void MainWindow::loadStyleSheet()
     const QString qssFile = QString(":/qss/generalStyle.qss");
     QFile file(qssFile);
     if(file.open(QFile::ReadOnly)){
-       this->setStyleSheet(file.readAll());
+        this->setStyleSheet(file.readAll());
         file.close();
     }
 }
@@ -281,4 +336,25 @@ void MainWindow::changeLuckyStatus()
 {
     m_luckyPeopleCnt = m_pInfoDlg->getOwnPrizeCnt();
     ui->label_LuckyStatus->setText(QString("%1/%2").arg(m_luckyPeopleCnt).arg(m_staffs.size()));
+    if(m_pressCnt != -1){
+        m_prizes = m_pInfoDlg->getPrizes();
+        Prize prize = m_prizes.at(m_pressCnt);
+        ui->label_prize->setText(QString("%1 %2/%3").arg(prize.name).arg(prize.remaining).arg(prize.num));
+    }
+}
+
+void MainWindow::initPlayer()
+{
+    m_playlist = new QMediaPlaylist(this);
+    // 添加媒体资源
+    m_playlist->addMedia(QUrl::fromLocalFile(mediaPath() + m_pInfoDlg->getBackgroundMusic()));
+    m_playlist->addMedia(QUrl::fromLocalFile(mediaPath() + m_pInfoDlg->getRollMusic()));
+    m_playlist->addMedia(QUrl::fromLocalFile(mediaPath() + QString("musicOfDraw.mp3")));
+    m_playlist->addMedia(QUrl::fromLocalFile(mediaPath() + m_pInfoDlg->getLuckyMusic()));
+    m_playlist->setCurrentIndex(0);
+    m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+
+    m_player = new QMediaPlayer(this);
+    m_player->setPlaylist(m_playlist);  // 设置播放列表
+
 }
